@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 export interface ProjectFile {
   name: string;
@@ -57,6 +57,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const login = (email: string) => setUser({ email });
   const signup = (email: string) => setUser({ email });
+  const resetCurrentFlow = () => {
+    setCurrentField('');
+    setCurrentExperience(0);
+    setCurrentFiles([]);
+    setCurrentCS1(0);
+  };
+
   const logout = () => {
     setUser(null);
     setProjects([]);
@@ -65,13 +72,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const addProject = (project: Project) => {
     setProjects(prev => [...prev, project]);
-  };
-
-  const resetCurrentFlow = () => {
-    setCurrentField('');
-    setCurrentExperience(0);
-    setCurrentFiles([]);
-    setCurrentCS1(0);
   };
 
   return (
@@ -99,6 +99,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useApp() {
   const ctx = useContext(AppContext);
   if (!ctx) throw new Error('useApp must be used within AppProvider');
